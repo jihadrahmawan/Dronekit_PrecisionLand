@@ -195,7 +195,7 @@ def vision(angle):
 			c_x=round (((cy)*speed_centering),3)
 			c_y=round ((cx*speed_centering),3)
 		
-			new_x=round (((c_y*(math.sin(angle))) + (c_x*(math.cos(angle)))),1)
+			new_x=round (((c_y*(math.sin(angle))) + (c_x*(math.cos(angle)))),1)        #inverse kninematics
 			new_y=(round (((c_y*(math.cos(angle))) - (c_x*(math.sin(angle)))),1))*-1
 			
 			idx5=idx5+1
@@ -259,24 +259,8 @@ counter=0;
 keyboard=raw_input ("Enter S for start mission ")
 if keyboard in ('S','s') :
 	arming_takeoff(altitude)
-	#home_point=vehicle.location.global_frame
-	#location(drop_point,altitude)
 	trackbars()
 	vision(vehicle.attitude.yaw)
-	send_ned_velocity(0,0,0)
-	vehicle.mode = VehicleMode("BRAKE")
-	while(1):
-		counter=counter+1
-		arduino.write('a')
-		if counter>10:
-			counter=0
-			break
-	time.sleep(5)
-	#down=vehicle.location.global_frame
-	#location(down,1.2)
-	#
-	#time.sleep(8)
-	#vehicle.mode = VehicleMode("LAND")
 vehicle.mode = VehicleMode("LAND")	
 cv2.destroyAllWindows()
 vehicle.close()	
